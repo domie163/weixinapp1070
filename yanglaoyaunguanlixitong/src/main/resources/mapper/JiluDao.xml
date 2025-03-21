@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.JiluDao">
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        a.id as id
+        ,a.yonghu_id as yonghuId
+        ,a.laoren_id as laorenId
+        ,a.jilu_name as jiluName
+        ,a.jilu_uuid_number as jiluUuidNumber
+        ,a.jilu_photo as jiluPhoto
+        ,a.jilu_tiwen as jiluTiwen
+        ,a.jilu_xueya as jiluXueya
+        ,a.jilu_content as jiluContent
+        ,a.jilu_delete as jiluDelete
+        ,a.insert_time as insertTime
+        ,a.create_time as createTime
+    </sql>
+    <select id="selectListView" parameterType="map" resultType="com.entity.view.JiluView" >
+        SELECT
+        <include refid="Base_Column_List" />
+        <!-- 级联表的字段 -->
+        ,laoren.yonghu_id as laorenYonghuId
+        ,laoren.jiashu_id as laorenJiashuId
+        ,laoren.kanhuren_name as kanhurenName
+        ,laoren.kanhuren_phone as kanhurenPhone
+        ,laoren.laoren_name as laorenName
+        ,laoren.laoren_phone as laorenPhone
+        ,laoren.laoren_id_number as laorenIdNumber
+        ,laoren.sex_types as sexTypes
+        ,laoren.age as age
+        ,laoren.laoren_photo as laorenPhoto
+        ,laoren.laoren_content as laorenContent
+        ,yonghu.yonghu_uuid_number as yonghuUuidNumber
+        ,yonghu.yonghu_name as yonghuName
+        ,yonghu.yonghu_phone as yonghuPhone
+        ,yonghu.yonghu_id_number as yonghuIdNumber
+        ,yonghu.yonghu_photo as yonghuPhoto
+        ,yonghu.yonghu_types as yonghuTypes
+        ,yonghu.yonghu_jaiwei as yonghuJaiwei
+        ,yonghu.yonghu_email as yonghuEmail
+        ,yonghu.jinyong_types as jinyongTypes
+
+        FROM jilu  a
+        left JOIN laoren laoren ON a.laoren_id = laoren.id
+        left JOIN yonghu yonghu ON a.yonghu_id = yonghu.id
+
+        <where>
+            <if test="params.ids != null">
+                and a.id in
+                <foreach item="item" index="index" collection="params.ids" open="(" separator="," close=")">
+                #{item}
+                </foreach>
+            </if>
+            <if test="params.yonghuId != null and params.yonghuId != ''">
+                and (
+                    a.yonghu_id = #{params.yonghuId}
+                    or laoren.yonghu_id = #{params.yonghuId}
+                )
+            </if>
+            <if test="params.laorenId != null and params.laorenId != ''">
+                and (
+                    a.laoren_id = #{params.laorenId}
+                )
+            </if>
+            <if test=" params.jiluName != '' and params.jiluName != null and params.jiluName != 'null' ">
+                and a.jilu_name like CONCAT('%',#{params.jiluName},'%')
+            </if>
+            <if test=" params.jiluUuidNumber != '' and params.jiluUuidNumber != null and params.jiluUuidNumber != 'null' ">
+                and a.jilu_uuid_number like CONCAT('%',#{params.jiluUuidNumber},'%')
+            </if>
+            <if test="params.jiluTiwenStart != null ">
+                <![CDATA[  and a.jilu_tiwen >= #{params.jiluTiwenStart}   ]]>
+            </if>
+            <if test="params.jiluTiwenEnd != null ">
+                <![CDATA[  and a.jilu_tiwen <= #{params.jiluTiwenEnd}   ]]>
+            </if>
+            <if test="params.jiluTiwen != null and params.jiluTiwen != ''">
+                and a.jilu_tiwen = #{params.jiluTiwen}
+            </if>
+            <if test="params.jiluXueyaStart != null ">
+                <![CDATA[  and a.jilu_xueya >= #{params.jiluXueyaStart}   ]]>
+            </if>
+            <if test="params.jiluXueyaEnd != null ">
+                <![CDATA[  and a.jilu_xueya <= #{params.jiluXueyaEnd}   ]]>
+            </if>
+            <if test="params.jiluXueya != null and params.jiluXueya != ''">
+                and a.jilu_xueya = #{params.jiluXueya}
+            </if>
+            <if test=" params.jiluContent != '' and params.jiluContent != null and params.jiluContent != 'null' ">
+                and a.jilu_content like CONCAT('%',#{params.jiluContent},'%')
+            </if>
+            <if test="params.jiluDeleteStart != null and params.jiluDeleteStart != ''">
+                <![CDATA[  and a.jilu_delete >= #{params.jiluDeleteStart}   ]]>
+            </if>
+            <if test="params.jiluDeleteEnd != null and params.jiluDeleteEnd != ''">
+                <![CDATA[  and a.jilu_delete <= #{params.jiluDeleteEnd}   ]]>
+            </if>
+             <if test="params.jiluDelete != null and params.jiluDelete != ''">
+                and a.jilu_delete = #{params.jiluDelete}
+             </if>
+            <if test=" params.insertTimeStart != '' and params.insertTimeStart != null ">
+                <![CDATA[  and UNIX_TIMESTAMP(a.insert_time) >= UNIX_TIMESTAMP(#{params.insertTimeStart}) ]]>
+            </if>
+            <if test=" params.insertTimeEnd != '' and params.insertTimeEnd != null ">
+                <![CDATA[  and UNIX_TIMESTAMP(a.insert_time) <= UNIX_TIMESTAMP(#{params.insertTimeEnd}) ]]>
+            </if>
+            <if test="params.insertTime != null and params.insertTime != ''">
+                and a.insert_time = #{params.insertTime}
+            </if>
+
+                <!-- 判断老人的id不为空 -->
+            <if test=" params.laorenIdNotNull != '' and params.laorenIdNotNull != null and params.laorenIdNotNull != 'null' ">
+                and a.laoren_id IS NOT NULL
+            </if>
+            <if test="params.chuangweiId != null  and params.chuangweiId != ''">
+                and laoren.chuangwei_id = #{params.chuangweiId}
+            </if>
+            <if test="params.jiashuId != null  and params.jiashuId != ''">
+                and laoren.jiashu_id = #{params.jiashuId}
+            </if>
+            <if test=" params.kanhurenName != '' and params.kanhurenName != null and params.kanhurenName != 'null' ">
+                and laoren.kanhuren_name like CONCAT('%',#{params.kanhurenName},'%')
+            </if>
+            <if test=" params.kanhurenPhone != '' and params.kanhurenPhone != null and params.kanhurenPhone != 'null' ">
+                and laoren.kanhuren_phone like CONCAT('%',#{params.kanhurenPhone},'%')
+            </if>
+            <if test=" params.laorenName != '' and params.laorenName != null and params.laorenName != 'null' ">
+                and laoren.laoren_name like CONCAT('%',#{params.laorenName},'%')
+            </if>
+            <if test=" params.laorenPhone != '' and params.laorenPhone != null and params.laorenPhone != 'null' ">
+                and laoren.laoren_phone like CONCAT('%',#{params.laorenPhone},'%')
+            </if>
+            <if test=" params.laorenIdNumber != '' and params.laorenIdNumber != null and params.laorenIdNumber != 'null' ">
+                and laoren.laoren_id_number like CONCAT('%',#{params.laorenIdNumber},'%')
+            </if>
+            <if test="params.sexTypes != null  and params.sexTypes != ''">
+                and laoren.sex_types = #{params.sexTypes}
+            </if>
+
+            <if test="params.ageStart != null  and params.ageStart != '' ">
+                <![CDATA[  and laoren.age >= #{params.ageStart}   ]]>
+            </if>
+            <if test="params.ageEnd != null  and params.ageEnd != '' ">
+                <![CDATA[  and laoren.age <= #{params.ageEnd}   ]]>
+            </if>
+            <if test="params.age != null  and params.age != '' ">
+                and laoren.age = #{params.age}
+            </if>
+            <if test=" params.laorenContent != '' and params.laorenContent != null and params.laorenContent != 'null' ">
+                and laoren.laoren_content like CONCAT('%',#{params.laorenContent},'%')
+            </if>
+            <if test=" params.insertTimeStart != '' and params.insertTimeStart != null ">
+                <![CDATA[  and UNIX_TIMESTAMP(laoren.insert_time) >= UNIX_TIMESTAMP(#{params.insertTimeStart}) ]]>
+            </if>
+            <if test=" params.insertTimeEnd != '' and params.insertTimeEnd != null ">
+                <![CDATA[  and UNIX_TIMESTAMP(laoren.insert_time) <= UNIX_TIMESTAMP(#{params.insertTimeEnd}) ]]>
+            </if>
+            <if test="params.insertTime != null and params.insertTime != ''">
+                and a.insert_time = #{params.insertTime}
+            </if>
+                <!-- 判断护工的id不为空 -->
+            <if test=" params.yonghuIdNotNull != '' and params.yonghuIdNotNull != null and params.yonghuIdNotNull != 'null' ">
+                and a.yonghu_id IS NOT NULL
+            </if>
+            <if test=" params.yonghuUuidNumber != '' and params.yonghuUuidNumber != null and params.yonghuUuidNumber != 'null' ">
+                and yonghu.yonghu_uuid_number like CONCAT('%',#{params.yonghuUuidNumber},'%')
+            </if>
+            <if test=" params.yonghuName != '' and params.yonghuName != null and params.yonghuName != 'null' ">
+                and yonghu.yonghu_name like CONCAT('%',#{params.yonghuName},'%')
+            </if>
+            <if test=" params.yonghuPhone != '' and params.yonghuPhone != null and params.yonghuPhone != 'null' ">
+                and yonghu.yonghu_phone like CONCAT('%',#{params.yonghuPhone},'%')
+            </if>
+            <if test=" params.yonghuIdNumber != '' and params.yonghuIdNumber != null and params.yonghuIdNumber != 'null' ">
+                and yonghu.yonghu_id_number like CONCAT('%',#{params.yonghuIdNumber},'%')
+            </if>
+            <if test="params.yonghuTypes != null  and params.yonghuTypes != ''">
+                and yonghu.yonghu_types = #{params.yonghuTypes}
+            </if>
+
+            <if test=" params.yonghuJaiwei != '' and params.yonghuJaiwei != null and params.yonghuJaiwei != 'null' ">
+                and yonghu.yonghu_jaiwei like CONCAT('%',#{params.yonghuJaiwei},'%')
+            </if>
+            <if test=" params.yonghuEmail != '' and params.yonghuEmail != null and params.yonghuEmail != 'null' ">
+                and yonghu.yonghu_email like CONCAT('%',#{params.yonghuEmail},'%')
+            </if>
+            <if test="params.jinyongTypes != null  and params.jinyongTypes != ''">
+                and yonghu.jinyong_types = #{params.jinyongTypes}
+            </if>
+
+        </where>
+        order by a.${params.sort} ${params.order}
+    </select>
+
+</mapper>

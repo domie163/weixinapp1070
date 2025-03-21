@@ -1,0 +1,506 @@
+{
+	"pages": [{
+		"path": "pages/login/login",
+		"style": {
+			"navigationBarBackgroundColor": "#5aa7a7",
+			"navigationBarTextStyle": "white",
+			"navigationBarTitleText": "登录"
+		}
+	},{
+		"path": "pages/register/register",
+		"style": {
+			"navigationBarBackgroundColor": "#5aa7a7",
+			"navigationBarTextStyle": "white",
+			"navigationBarTitleText": "注册"
+		}
+	},{
+		"path": "pages/forget/forget",
+		"style": {
+			"navigationBarBackgroundColor": "#5aa7a7",
+			"navigationBarTextStyle": "white",
+			"navigationBarTitleText": "忘记密码"
+		}
+		},
+		{
+		"path": "pages/changepassword/changepassword",
+		"style": {
+		"navigationBarBackgroundColor": "#5aa7a7",
+		"navigationBarTextStyle": "white",
+		"navigationBarTitleText": "修改密码"
+			}
+		},
+		{
+		"path": "pages/center/center",
+		"style": {
+			"navigationBarBackgroundColor": "#5aa7a7",
+			"navigationBarTextStyle": "white",
+			"navigationBarTitleText": "我的"
+		}
+	},{
+		"path": "pages/user-info/userinfo",
+		"style": {
+			"navigationBarBackgroundColor": "#5aa7a7",
+			"navigationBarTextStyle": "white",
+			"navigationBarTitleText": "用户信息"
+		}
+	}
+
+	,{
+		"path": "pages/chuangwei/list",
+		"style": {
+			"navigationBarBackgroundColor": "#5aa7a7",
+			"navigationBarTextStyle": "white",
+			"navigationBarTitleText": "床位展示"
+		}
+	},{
+		"path": "pages/chuangwei/list2",
+		"style": {
+			"navigationBarBackgroundColor": "#5aa7a7",
+			"navigationBarTextStyle": "white",
+			"navigationBarTitleText": "我的床位"
+		}
+	},{
+		"path": "pages/chuangwei/add-or-update",
+		"style": {
+			"navigationBarBackgroundColor": "#5aa7a7",
+			"navigationBarTextStyle": "white",
+			"navigationBarTitleText": "床位添加/修改"
+		}
+	},{
+		"path": "pages/chuangwei/detail",
+		"style": {
+			"navigationBarBackgroundColor": "#5aa7a7",
+			"navigationBarTextStyle": "white",
+			"navigationBarTitleText": "床位详情"
+		}
+	}
+	,{
+		"path": "pages/chuangweiYuyue/list",
+		"style": {
+			"navigationBarBackgroundColor": "#5aa7a7",
+			"navigationBarTextStyle": "white",
+			"navigationBarTitleText": "床位调动申请展示"
+		}
+	},{
+		"path": "pages/chuangweiYuyue/list2",
+		"style": {
+			"navigationBarBackgroundColor": "#5aa7a7",
+			"navigationBarTextStyle": "white",
+			"navigationBarTitleText": "我的床位调动申请"
+		}
+	},{
+		"path": "pages/chuangweiYuyue/add-or-update",
+		"style": {
+			"navigationBarBackgroundColor": "#5aa7a7",
+			"navigationBarTextStyle": "white",
+			"navigationBarTitleText": "床位调动申请添加/修改"
+		}
+	},{
+		"path": "pages/chuangweiYuyue/detail",
+		"style": {
+			"navigationBarBackgroundColor": "#5aa7a7",
+			"navigationBarTextStyle": "white",
+			"navigationBarTitleText": "床位调动申请详情"
+		}
+	}
+	,{
+		"path": "pages/chuyaun/list",
+		"style": {
+			"navigationBarBackgroundColor": "#5aa7a7",
+			"navigationBarTextStyle": "white",
+			"navigationBarTitleText": "出院申请展示"
+		}
+	},{
+		"path": "pages/chuyaun/list2",
+		"style": {
+			"navigationBarBackgroundColor": "#5aa7a7",
+			"navigationBarTextStyle": "white",
+			"navigationBarTitleText": "我的出院申请"
+		}
+	},{
+		"path": "pages/chuyaun/add-or-update",
+		"style": {
+			"navigationBarBackgroundColor": "#5aa7a7",
+			"navigationBarTextStyle": "white",
+			"navigationBarTitleText": "出院申请添加/修改"
+		}
+	},{
+		"path": "pages/chuyaun/detail",
+		"style": {
+			"navigationBarBackgroundColor": "#5aa7a7",
+			"navigationBarTextStyle": "white",
+			"navigationBarTitleText": "出院申请详情"
+		}
+	}
+	,{
+		"path": "pages/diaodong/list",
+		"style": {
+			"navigationBarBackgroundColor": "#5aa7a7",
+			"navigationBarTextStyle": "white",
+			"navigationBarTitleText": "调动申请展示"
+		}
+	},{
+		"path": "pages/diaodong/list2",
+		"style": {
+			"navigationBarBackgroundColor": "#5aa7a7",
+			"navigationBarTextStyle": "white",
+			"navigationBarTitleText": "我的调动申请"
+		}
+	},{
+		"path": "pages/diaodong/add-or-update",
+		"style": {
+			"navigationBarBackgroundColor": "#5aa7a7",
+			"navigationBarTextStyle": "white",
+			"navigationBarTitleText": "调动申请添加/修改"
+		}
+	},{
+		"path": "pages/diaodong/detail",
+		"style": {
+			"navigationBarBackgroundColor": "#5aa7a7",
+			"navigationBarTextStyle": "white",
+			"navigationBarTitleText": "调动申请详情"
+		}
+	}
+	,{
+		"path": "pages/fangjian/list",
+		"style": {
+			"navigationBarBackgroundColor": "#5aa7a7",
+			"navigationBarTextStyle": "white",
+			"navigationBarTitleText": "房间展示"
+		}
+	},{
+		"path": "pages/fangjian/list2",
+		"style": {
+			"navigationBarBackgroundColor": "#5aa7a7",
+			"navigationBarTextStyle": "white",
+			"navigationBarTitleText": "我的房间"
+		}
+	},{
+		"path": "pages/fangjian/add-or-update",
+		"style": {
+			"navigationBarBackgroundColor": "#5aa7a7",
+			"navigationBarTextStyle": "white",
+			"navigationBarTitleText": "房间添加/修改"
+		}
+	},{
+		"path": "pages/fangjian/detail",
+		"style": {
+			"navigationBarBackgroundColor": "#5aa7a7",
+			"navigationBarTextStyle": "white",
+			"navigationBarTitleText": "房间详情"
+		}
+	}
+	,{
+		"path": "pages/gonggao/list",
+		"style": {
+			"navigationBarBackgroundColor": "#5aa7a7",
+			"navigationBarTextStyle": "white",
+			"navigationBarTitleText": "公告信息展示"
+		}
+	},{
+		"path": "pages/gonggao/list2",
+		"style": {
+			"navigationBarBackgroundColor": "#5aa7a7",
+			"navigationBarTextStyle": "white",
+			"navigationBarTitleText": "我的公告信息"
+		}
+	},{
+		"path": "pages/gonggao/add-or-update",
+		"style": {
+			"navigationBarBackgroundColor": "#5aa7a7",
+			"navigationBarTextStyle": "white",
+			"navigationBarTitleText": "公告信息添加/修改"
+		}
+	},{
+		"path": "pages/gonggao/detail",
+		"style": {
+			"navigationBarBackgroundColor": "#5aa7a7",
+			"navigationBarTextStyle": "white",
+			"navigationBarTitleText": "公告信息详情"
+		}
+	}
+	,{
+		"path": "pages/hugong/list",
+		"style": {
+			"navigationBarBackgroundColor": "#5aa7a7",
+			"navigationBarTextStyle": "white",
+			"navigationBarTitleText": "护工更换申请展示"
+		}
+	},{
+		"path": "pages/hugong/list2",
+		"style": {
+			"navigationBarBackgroundColor": "#5aa7a7",
+			"navigationBarTextStyle": "white",
+			"navigationBarTitleText": "我的护工更换申请"
+		}
+	},{
+		"path": "pages/hugong/add-or-update",
+		"style": {
+			"navigationBarBackgroundColor": "#5aa7a7",
+			"navigationBarTextStyle": "white",
+			"navigationBarTitleText": "护工更换申请添加/修改"
+		}
+	},{
+		"path": "pages/hugong/detail",
+		"style": {
+			"navigationBarBackgroundColor": "#5aa7a7",
+			"navigationBarTextStyle": "white",
+			"navigationBarTitleText": "护工更换申请详情"
+		}
+	}
+	,{
+		"path": "pages/jiashu/list",
+		"style": {
+			"navigationBarBackgroundColor": "#5aa7a7",
+			"navigationBarTextStyle": "white",
+			"navigationBarTitleText": "家属展示"
+		}
+	},{
+		"path": "pages/jiashu/list2",
+		"style": {
+			"navigationBarBackgroundColor": "#5aa7a7",
+			"navigationBarTextStyle": "white",
+			"navigationBarTitleText": "我的家属"
+		}
+	},{
+		"path": "pages/jiashu/add-or-update",
+		"style": {
+			"navigationBarBackgroundColor": "#5aa7a7",
+			"navigationBarTextStyle": "white",
+			"navigationBarTitleText": "家属添加/修改"
+		}
+	},{
+		"path": "pages/jiashu/detail",
+		"style": {
+			"navigationBarBackgroundColor": "#5aa7a7",
+			"navigationBarTextStyle": "white",
+			"navigationBarTitleText": "家属详情"
+		}
+	}
+	,{
+		"path": "pages/jilu/list",
+		"style": {
+			"navigationBarBackgroundColor": "#5aa7a7",
+			"navigationBarTextStyle": "white",
+			"navigationBarTitleText": "健康信息展示"
+		}
+	},{
+		"path": "pages/jilu/list2",
+		"style": {
+			"navigationBarBackgroundColor": "#5aa7a7",
+			"navigationBarTextStyle": "white",
+			"navigationBarTitleText": "我的健康信息"
+		}
+	},{
+		"path": "pages/jilu/add-or-update",
+		"style": {
+			"navigationBarBackgroundColor": "#5aa7a7",
+			"navigationBarTextStyle": "white",
+			"navigationBarTitleText": "健康信息添加/修改"
+		}
+	},{
+		"path": "pages/jilu/detail",
+		"style": {
+			"navigationBarBackgroundColor": "#5aa7a7",
+			"navigationBarTextStyle": "white",
+			"navigationBarTitleText": "健康信息详情"
+		}
+	}
+	,{
+		"path": "pages/laoren/list",
+		"style": {
+			"navigationBarBackgroundColor": "#5aa7a7",
+			"navigationBarTextStyle": "white",
+			"navigationBarTitleText": "老人展示"
+		}
+	},{
+		"path": "pages/laoren/list2",
+		"style": {
+			"navigationBarBackgroundColor": "#5aa7a7",
+			"navigationBarTextStyle": "white",
+			"navigationBarTitleText": "我的老人"
+		}
+	},{
+		"path": "pages/laoren/add-or-update",
+		"style": {
+			"navigationBarBackgroundColor": "#5aa7a7",
+			"navigationBarTextStyle": "white",
+			"navigationBarTitleText": "老人添加/修改"
+		}
+	},{
+		"path": "pages/laoren/detail",
+		"style": {
+			"navigationBarBackgroundColor": "#5aa7a7",
+			"navigationBarTextStyle": "white",
+			"navigationBarTitleText": "老人详情"
+		}
+	}
+	,{
+		"path": "pages/laorenqingjia/list",
+		"style": {
+			"navigationBarBackgroundColor": "#5aa7a7",
+			"navigationBarTextStyle": "white",
+			"navigationBarTitleText": "老人请假申请展示"
+		}
+	},{
+		"path": "pages/laorenqingjia/list2",
+		"style": {
+			"navigationBarBackgroundColor": "#5aa7a7",
+			"navigationBarTextStyle": "white",
+			"navigationBarTitleText": "我的老人请假申请"
+		}
+	},{
+		"path": "pages/laorenqingjia/add-or-update",
+		"style": {
+			"navigationBarBackgroundColor": "#5aa7a7",
+			"navigationBarTextStyle": "white",
+			"navigationBarTitleText": "老人请假申请添加/修改"
+		}
+	},{
+		"path": "pages/laorenqingjia/detail",
+		"style": {
+			"navigationBarBackgroundColor": "#5aa7a7",
+			"navigationBarTextStyle": "white",
+			"navigationBarTitleText": "老人请假申请详情"
+		}
+	}
+	,{
+		"path": "pages/lizhi/list",
+		"style": {
+			"navigationBarBackgroundColor": "#5aa7a7",
+			"navigationBarTextStyle": "white",
+			"navigationBarTitleText": "离职申请展示"
+		}
+	},{
+		"path": "pages/lizhi/list2",
+		"style": {
+			"navigationBarBackgroundColor": "#5aa7a7",
+			"navigationBarTextStyle": "white",
+			"navigationBarTitleText": "我的离职申请"
+		}
+	},{
+		"path": "pages/lizhi/add-or-update",
+		"style": {
+			"navigationBarBackgroundColor": "#5aa7a7",
+			"navigationBarTextStyle": "white",
+			"navigationBarTitleText": "离职申请添加/修改"
+		}
+	},{
+		"path": "pages/lizhi/detail",
+		"style": {
+			"navigationBarBackgroundColor": "#5aa7a7",
+			"navigationBarTextStyle": "white",
+			"navigationBarTitleText": "离职申请详情"
+		}
+	}
+	,{
+		"path": "pages/qingjia/list",
+		"style": {
+			"navigationBarBackgroundColor": "#5aa7a7",
+			"navigationBarTextStyle": "white",
+			"navigationBarTitleText": "请假申请展示"
+		}
+	},{
+		"path": "pages/qingjia/list2",
+		"style": {
+			"navigationBarBackgroundColor": "#5aa7a7",
+			"navigationBarTextStyle": "white",
+			"navigationBarTitleText": "我的请假申请"
+		}
+	},{
+		"path": "pages/qingjia/add-or-update",
+		"style": {
+			"navigationBarBackgroundColor": "#5aa7a7",
+			"navigationBarTextStyle": "white",
+			"navigationBarTitleText": "请假申请添加/修改"
+		}
+	},{
+		"path": "pages/qingjia/detail",
+		"style": {
+			"navigationBarBackgroundColor": "#5aa7a7",
+			"navigationBarTextStyle": "white",
+			"navigationBarTitleText": "请假申请详情"
+		}
+	}
+	,{
+		"path": "pages/yonghu/list",
+		"style": {
+			"navigationBarBackgroundColor": "#5aa7a7",
+			"navigationBarTextStyle": "white",
+			"navigationBarTitleText": "护工展示"
+		}
+	},{
+		"path": "pages/yonghu/list2",
+		"style": {
+			"navigationBarBackgroundColor": "#5aa7a7",
+			"navigationBarTextStyle": "white",
+			"navigationBarTitleText": "我的护工"
+		}
+	},{
+		"path": "pages/yonghu/add-or-update",
+		"style": {
+			"navigationBarBackgroundColor": "#5aa7a7",
+			"navigationBarTextStyle": "white",
+			"navigationBarTitleText": "护工添加/修改"
+		}
+	},{
+		"path": "pages/yonghu/detail",
+		"style": {
+			"navigationBarBackgroundColor": "#5aa7a7",
+			"navigationBarTextStyle": "white",
+			"navigationBarTitleText": "护工详情"
+		}
+	}
+			,{
+		"path": "pages/index/index",
+		"style": {
+			"navigationBarBackgroundColor": "#5aa7a7",
+			"navigationBarTextStyle": "white",
+			"navigationBarTitleText": "养老院管理系统首页"
+		}
+	}
+	],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "养老院管理系统",
+		"navigationBarBackgroundColor": "#F8F8F8",
+		"backgroundColor": "#F8F8F8"
+	},
+	"tabBar": {
+		"color": "#FFFFFF",
+		"selectedColor": "#fff",
+		"borderStyle": "black",
+		"backgroundColor": "#a7d676",
+		"list": [{
+				"pagePath": "pages/index/index",
+				"iconPath": "static/tabs/index.png",
+				"selectedIconPath": "static/tabs/index1.png",
+				"text": "首页"
+			}
+			,{
+				"pagePath": "pages/chuangwei/list",
+				"iconPath": "static/tabs/type.png",
+				"selectedIconPath": "static/tabs/type1.png",
+				"text": "床位"
+			}
+			,{
+				"pagePath": "pages/gonggao/list",
+				"iconPath": "static/tabs/type.png",
+				"selectedIconPath": "static/tabs/type1.png",
+				"text": "公告信息"
+			}
+			,{
+				"pagePath": "pages/center/center",
+				"iconPath": "static/tabs/mine.png",
+				"selectedIconPath": "static/tabs/mine1.png",
+				"text": "我的"
+			}
+		]
+	}
+	// "permission": {
+	// 	"scope.userLocation": {
+	// 		"desc": ""
+	// 	}
+	// },
+	// "requiredPrivateInfos": ["getLocation", "chooseLocation"]
+}

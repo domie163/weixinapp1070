@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.HugongDao">
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        a.id as id
+        ,a.hugong_uuid_number as hugongUuidNumber
+        ,a.jiashu_id as jiashuId
+        ,a.laoren_id as laorenId
+        ,a.hugong_text as hugongText
+        ,a.insert_time as insertTime
+        ,a.hugong_yesno_types as hugongYesnoTypes
+        ,a.hugong_yesno_text as hugongYesnoText
+        ,a.hugong_shenhe_time as hugongShenheTime
+        ,a.create_time as createTime
+    </sql>
+    <select id="selectListView" parameterType="map" resultType="com.entity.view.HugongView" >
+        SELECT
+        <include refid="Base_Column_List" />
+        <!-- 级联表的字段 -->
+        ,jiashu.jiashu_uuid_number as jiashuUuidNumber
+        ,jiashu.jiashu_name as jiashuName
+        ,jiashu.jiashu_phone as jiashuPhone
+        ,jiashu.jiashu_id_number as jiashuIdNumber
+        ,jiashu.jiashu_photo as jiashuPhoto
+        ,jiashu.jiashu_email as jiashuEmail
+        ,laoren.yonghu_id as laorenYonghuId
+        ,laoren.jiashu_id as laorenJiashuId
+        ,laoren.kanhuren_name as kanhurenName
+        ,laoren.kanhuren_phone as kanhurenPhone
+        ,laoren.laoren_name as laorenName
+        ,laoren.laoren_phone as laorenPhone
+        ,laoren.laoren_id_number as laorenIdNumber
+        ,laoren.sex_types as sexTypes
+        ,laoren.age as age
+        ,laoren.laoren_photo as laorenPhoto
+        ,laoren.laoren_content as laorenContent
+
+        FROM hugong  a
+        left JOIN jiashu jiashu ON a.jiashu_id = jiashu.id
+        left JOIN laoren laoren ON a.laoren_id = laoren.id
+
+        <where>
+            <if test="params.ids != null">
+                and a.id in
+                <foreach item="item" index="index" collection="params.ids" open="(" separator="," close=")">
+                #{item}
+                </foreach>
+            </if>
+            <if test=" params.hugongUuidNumber != '' and params.hugongUuidNumber != null and params.hugongUuidNumber != 'null' ">
+                and a.hugong_uuid_number like CONCAT('%',#{params.hugongUuidNumber},'%')
+            </if>
+            <if test="params.jiashuId != null and params.jiashuId != ''">
+                and (
+                    a.jiashu_id = #{params.jiashuId}
+                    or laoren.jiashu_id = #{params.jiashuId}
+                )
+            </if>
+            <if test="params.laorenId != null and params.laorenId != ''">
+                and (
+                    a.laoren_id = #{params.laorenId}
+                )
+            </if>
+            <if test=" params.hugongText != '' and params.hugongText != null and params.hugongText != 'null' ">
+                and a.hugong_text like CONCAT('%',#{params.hugongText},'%')
+            </if>
+            <if test=" params.insertTimeStart != '' and params.insertTimeStart != null ">
+                <![CDATA[  and UNIX_TIMESTAMP(a.insert_time) >= UNIX_TIMESTAMP(#{params.insertTimeStart}) ]]>
+            </if>
+            <if test=" params.insertTimeEnd != '' and params.insertTimeEnd != null ">
+                <![CDATA[  and UNIX_TIMESTAMP(a.insert_time) <= UNIX_TIMESTAMP(#{params.insertTimeEnd}) ]]>
+            </if>
+            <if test="params.insertTime != null and params.insertTime != ''">
+                and a.insert_time = #{params.insertTime}
+            </if>
+            <if test="params.hugongYesnoTypes != null and params.hugongYesnoTypes != ''">
+                and a.hugong_yesno_types = #{params.hugongYesnoTypes}
+            </if>
+            <if test=" params.hugongYesnoText != '' and params.hugongYesnoText != null and params.hugongYesnoText != 'null' ">
+                and a.hugong_yesno_text like CONCAT('%',#{params.hugongYesnoText},'%')
+            </if>
+            <if test=" params.hugongShenheTimeStart != '' and params.hugongShenheTimeStart != null ">
+                <![CDATA[  and UNIX_TIMESTAMP(a.hugong_shenhe_time) >= UNIX_TIMESTAMP(#{params.hugongShenheTimeStart}) ]]>
+            </if>
+            <if test=" params.hugongShenheTimeEnd != '' and params.hugongShenheTimeEnd != null ">
+                <![CDATA[  and UNIX_TIMESTAMP(a.hugong_shenhe_time) <= UNIX_TIMESTAMP(#{params.hugongShenheTimeEnd}) ]]>
+            </if>
+            <if test="params.hugongShenheTime != null and params.hugongShenheTime != ''">
+                and a.hugong_shenhe_time = #{params.hugongShenheTime}
+            </if>
+
+                <!-- 判断家属的id不为空 -->
+            <if test=" params.jiashuIdNotNull != '' and params.jiashuIdNotNull != null and params.jiashuIdNotNull != 'null' ">
+                and a.jiashu_id IS NOT NULL
+            </if>
+            <if test=" params.jiashuUuidNumber != '' and params.jiashuUuidNumber != null and params.jiashuUuidNumber != 'null' ">
+                and jiashu.jiashu_uuid_number like CONCAT('%',#{params.jiashuUuidNumber},'%')
+            </if>
+            <if test=" params.jiashuName != '' and params.jiashuName != null and params.jiashuName != 'null' ">
+                and jiashu.jiashu_name like CONCAT('%',#{params.jiashuName},'%')
+            </if>
+            <if test=" params.jiashuPhone != '' and params.jiashuPhone != null and params.jiashuPhone != 'null' ">
+                and jiashu.jiashu_phone like CONCAT('%',#{params.jiashuPhone},'%')
+            </if>
+            <if test=" params.jiashuIdNumber != '' and params.jiashuIdNumber != null and params.jiashuIdNumber != 'null' ">
+                and jiashu.jiashu_id_number like CONCAT('%',#{params.jiashuIdNumber},'%')
+            </if>
+            <if test=" params.jiashuEmail != '' and params.jiashuEmail != null and params.jiashuEmail != 'null' ">
+                and jiashu.jiashu_email like CONCAT('%',#{params.jiashuEmail},'%')
+            </if>
+                <!-- 判断老人的id不为空 -->
+            <if test=" params.laorenIdNotNull != '' and params.laorenIdNotNull != null and params.laorenIdNotNull != 'null' ">
+                and a.laoren_id IS NOT NULL
+            </if>
+            <if test="params.yonghuId != null  and params.yonghuId != ''">
+                and laoren.yonghu_id = #{params.yonghuId}
+            </if>
+            <if test="params.chuangweiId != null  and params.chuangweiId != ''">
+                and laoren.chuangwei_id = #{params.chuangweiId}
+            </if>
+            <if test=" params.kanhurenName != '' and params.kanhurenName != null and params.kanhurenName != 'null' ">
+                and laoren.kanhuren_name like CONCAT('%',#{params.kanhurenName},'%')
+            </if>
+            <if test=" params.kanhurenPhone != '' and params.kanhurenPhone != null and params.kanhurenPhone != 'null' ">
+                and laoren.kanhuren_phone like CONCAT('%',#{params.kanhurenPhone},'%')
+            </if>
+            <if test=" params.laorenName != '' and params.laorenName != null and params.laorenName != 'null' ">
+                and laoren.laoren_name like CONCAT('%',#{params.laorenName},'%')
+            </if>
+            <if test=" params.laorenPhone != '' and params.laorenPhone != null and params.laorenPhone != 'null' ">
+                and laoren.laoren_phone like CONCAT('%',#{params.laorenPhone},'%')
+            </if>
+            <if test=" params.laorenIdNumber != '' and params.laorenIdNumber != null and params.laorenIdNumber != 'null' ">
+                and laoren.laoren_id_number like CONCAT('%',#{params.laorenIdNumber},'%')
+            </if>
+            <if test="params.sexTypes != null  and params.sexTypes != ''">
+                and laoren.sex_types = #{params.sexTypes}
+            </if>
+
+            <if test="params.ageStart != null  and params.ageStart != '' ">
+                <![CDATA[  and laoren.age >= #{params.ageStart}   ]]>
+            </if>
+            <if test="params.ageEnd != null  and params.ageEnd != '' ">
+                <![CDATA[  and laoren.age <= #{params.ageEnd}   ]]>
+            </if>
+            <if test="params.age != null  and params.age != '' ">
+                and laoren.age = #{params.age}
+            </if>
+            <if test=" params.laorenContent != '' and params.laorenContent != null and params.laorenContent != 'null' ">
+                and laoren.laoren_content like CONCAT('%',#{params.laorenContent},'%')
+            </if>
+            <if test=" params.insertTimeStart != '' and params.insertTimeStart != null ">
+                <![CDATA[  and UNIX_TIMESTAMP(laoren.insert_time) >= UNIX_TIMESTAMP(#{params.insertTimeStart}) ]]>
+            </if>
+            <if test=" params.insertTimeEnd != '' and params.insertTimeEnd != null ">
+                <![CDATA[  and UNIX_TIMESTAMP(laoren.insert_time) <= UNIX_TIMESTAMP(#{params.insertTimeEnd}) ]]>
+            </if>
+            <if test="params.insertTime != null and params.insertTime != ''">
+                and a.insert_time = #{params.insertTime}
+            </if>
+        </where>
+        order by a.${params.sort} ${params.order}
+    </select>
+
+</mapper>

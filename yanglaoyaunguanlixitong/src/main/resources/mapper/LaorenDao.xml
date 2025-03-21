@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.LaorenDao">
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        a.id as id
+        ,a.yonghu_id as yonghuId
+        ,a.chuangwei_id as chuangweiId
+        ,a.jiashu_id as jiashuId
+        ,a.kanhuren_name as kanhurenName
+        ,a.kanhuren_phone as kanhurenPhone
+        ,a.laoren_name as laorenName
+        ,a.laoren_phone as laorenPhone
+        ,a.laoren_id_number as laorenIdNumber
+        ,a.sex_types as sexTypes
+        ,a.age as age
+        ,a.laoren_photo as laorenPhoto
+        ,a.laoren_content as laorenContent
+        ,a.insert_time as insertTime
+        ,a.create_time as createTime
+    </sql>
+    <select id="selectListView" parameterType="map" resultType="com.entity.view.LaorenView" >
+        SELECT
+        <include refid="Base_Column_List" />
+        <!-- 级联表的字段 -->
+        ,chuangwei.chuangwei_name as chuangweiName
+        ,chuangwei.chuangwei_uuid_number as chuangweiUuidNumber
+        ,chuangwei.chuangwei_photo as chuangweiPhoto
+        ,chuangwei.chuangwei_address as chuangweiAddress
+        ,chuangwei.chuangwei_types as chuangweiTypes
+        ,chuangwei.chuangwei_content as chuangweiContent
+        ,chuangwei.chuangwei_delete as chuangweiDelete
+        ,jiashu.jiashu_uuid_number as jiashuUuidNumber
+        ,jiashu.jiashu_name as jiashuName
+        ,jiashu.jiashu_phone as jiashuPhone
+        ,jiashu.jiashu_id_number as jiashuIdNumber
+        ,jiashu.jiashu_photo as jiashuPhoto
+        ,jiashu.jiashu_email as jiashuEmail
+        ,yonghu.yonghu_uuid_number as yonghuUuidNumber
+        ,yonghu.yonghu_name as yonghuName
+        ,yonghu.yonghu_phone as yonghuPhone
+        ,yonghu.yonghu_id_number as yonghuIdNumber
+        ,yonghu.yonghu_photo as yonghuPhoto
+        ,yonghu.yonghu_types as yonghuTypes
+        ,yonghu.yonghu_jaiwei as yonghuJaiwei
+        ,yonghu.yonghu_email as yonghuEmail
+        ,yonghu.jinyong_types as jinyongTypes
+
+        FROM laoren  a
+        left JOIN chuangwei chuangwei ON a.chuangwei_id = chuangwei.id
+        left JOIN jiashu jiashu ON a.jiashu_id = jiashu.id
+        left JOIN yonghu yonghu ON a.yonghu_id = yonghu.id
+
+        <where>
+            <if test="params.ids != null">
+                and a.id in
+                <foreach item="item" index="index" collection="params.ids" open="(" separator="," close=")">
+                #{item}
+                </foreach>
+            </if>
+            <if test="params.yonghuId != null and params.yonghuId != ''">
+                and (
+                    a.yonghu_id = #{params.yonghuId}
+                )
+            </if>
+            <if test="params.chuangweiId != null and params.chuangweiId != ''">
+                and (
+                    a.chuangwei_id = #{params.chuangweiId}
+                )
+            </if>
+            <if test="params.jiashuId != null and params.jiashuId != ''">
+                and (
+                    a.jiashu_id = #{params.jiashuId}
+                )
+            </if>
+            <if test=" params.kanhurenName != '' and params.kanhurenName != null and params.kanhurenName != 'null' ">
+                and a.kanhuren_name like CONCAT('%',#{params.kanhurenName},'%')
+            </if>
+            <if test=" params.kanhurenPhone != '' and params.kanhurenPhone != null and params.kanhurenPhone != 'null' ">
+                and a.kanhuren_phone like CONCAT('%',#{params.kanhurenPhone},'%')
+            </if>
+            <if test=" params.laorenName != '' and params.laorenName != null and params.laorenName != 'null' ">
+                and a.laoren_name like CONCAT('%',#{params.laorenName},'%')
+            </if>
+            <if test=" params.laorenPhone != '' and params.laorenPhone != null and params.laorenPhone != 'null' ">
+                and a.laoren_phone like CONCAT('%',#{params.laorenPhone},'%')
+            </if>
+            <if test=" params.laorenIdNumber != '' and params.laorenIdNumber != null and params.laorenIdNumber != 'null' ">
+                and a.laoren_id_number like CONCAT('%',#{params.laorenIdNumber},'%')
+            </if>
+            <if test="params.sexTypes != null and params.sexTypes != ''">
+                and a.sex_types = #{params.sexTypes}
+            </if>
+            <if test="params.ageStart != null and params.ageStart != ''">
+                <![CDATA[  and a.age >= #{params.ageStart}   ]]>
+            </if>
+            <if test="params.ageEnd != null and params.ageEnd != ''">
+                <![CDATA[  and a.age <= #{params.ageEnd}   ]]>
+            </if>
+             <if test="params.age != null and params.age != ''">
+                and a.age = #{params.age}
+             </if>
+            <if test=" params.laorenContent != '' and params.laorenContent != null and params.laorenContent != 'null' ">
+                and a.laoren_content like CONCAT('%',#{params.laorenContent},'%')
+            </if>
+            <if test=" params.insertTimeStart != '' and params.insertTimeStart != null ">
+                <![CDATA[  and UNIX_TIMESTAMP(a.insert_time) >= UNIX_TIMESTAMP(#{params.insertTimeStart}) ]]>
+            </if>
+            <if test=" params.insertTimeEnd != '' and params.insertTimeEnd != null ">
+                <![CDATA[  and UNIX_TIMESTAMP(a.insert_time) <= UNIX_TIMESTAMP(#{params.insertTimeEnd}) ]]>
+            </if>
+            <if test="params.insertTime != null and params.insertTime != ''">
+                and a.insert_time = #{params.insertTime}
+            </if>
+
+                <!-- 判断床位的id不为空 -->
+            <if test=" params.chuangweiIdNotNull != '' and params.chuangweiIdNotNull != null and params.chuangweiIdNotNull != 'null' ">
+                and a.chuangwei_id IS NOT NULL
+            </if>
+            <if test="params.fangjianId != null  and params.fangjianId != ''">
+                and chuangwei.fangjian_id = #{params.fangjianId}
+            </if>
+            <if test=" params.chuangweiName != '' and params.chuangweiName != null and params.chuangweiName != 'null' ">
+                and chuangwei.chuangwei_name like CONCAT('%',#{params.chuangweiName},'%')
+            </if>
+            <if test=" params.chuangweiUuidNumber != '' and params.chuangweiUuidNumber != null and params.chuangweiUuidNumber != 'null' ">
+                and chuangwei.chuangwei_uuid_number like CONCAT('%',#{params.chuangweiUuidNumber},'%')
+            </if>
+            <if test=" params.chuangweiAddress != '' and params.chuangweiAddress != null and params.chuangweiAddress != 'null' ">
+                and chuangwei.chuangwei_address like CONCAT('%',#{params.chuangweiAddress},'%')
+            </if>
+            <if test="params.chuangweiTypes != null  and params.chuangweiTypes != ''">
+                and chuangwei.chuangwei_types = #{params.chuangweiTypes}
+            </if>
+
+            <if test=" params.chuangweiContent != '' and params.chuangweiContent != null and params.chuangweiContent != 'null' ">
+                and chuangwei.chuangwei_content like CONCAT('%',#{params.chuangweiContent},'%')
+            </if>
+            <if test="params.chuangweiDeleteStart != null  and params.chuangweiDeleteStart != '' ">
+                <![CDATA[  and chuangwei.chuangwei_delete >= #{params.chuangweiDeleteStart}   ]]>
+            </if>
+            <if test="params.chuangweiDeleteEnd != null  and params.chuangweiDeleteEnd != '' ">
+                <![CDATA[  and chuangwei.chuangwei_delete <= #{params.chuangweiDeleteEnd}   ]]>
+            </if>
+            <if test="params.chuangweiDelete != null  and params.chuangweiDelete != '' ">
+                and chuangwei.chuangwei_delete = #{params.chuangweiDelete}
+            </if>
+            <if test=" params.insertTimeStart != '' and params.insertTimeStart != null ">
+                <![CDATA[  and UNIX_TIMESTAMP(chuangwei.insert_time) >= UNIX_TIMESTAMP(#{params.insertTimeStart}) ]]>
+            </if>
+            <if test=" params.insertTimeEnd != '' and params.insertTimeEnd != null ">
+                <![CDATA[  and UNIX_TIMESTAMP(chuangwei.insert_time) <= UNIX_TIMESTAMP(#{params.insertTimeEnd}) ]]>
+            </if>
+            <if test="params.insertTime != null and params.insertTime != ''">
+                and a.insert_time = #{params.insertTime}
+            </if>
+                <!-- 判断家属的id不为空 -->
+            <if test=" params.jiashuIdNotNull != '' and params.jiashuIdNotNull != null and params.jiashuIdNotNull != 'null' ">
+                and a.jiashu_id IS NOT NULL
+            </if>
+            <if test=" params.jiashuUuidNumber != '' and params.jiashuUuidNumber != null and params.jiashuUuidNumber != 'null' ">
+                and jiashu.jiashu_uuid_number like CONCAT('%',#{params.jiashuUuidNumber},'%')
+            </if>
+            <if test=" params.jiashuName != '' and params.jiashuName != null and params.jiashuName != 'null' ">
+                and jiashu.jiashu_name like CONCAT('%',#{params.jiashuName},'%')
+            </if>
+            <if test=" params.jiashuPhone != '' and params.jiashuPhone != null and params.jiashuPhone != 'null' ">
+                and jiashu.jiashu_phone like CONCAT('%',#{params.jiashuPhone},'%')
+            </if>
+            <if test=" params.jiashuIdNumber != '' and params.jiashuIdNumber != null and params.jiashuIdNumber != 'null' ">
+                and jiashu.jiashu_id_number like CONCAT('%',#{params.jiashuIdNumber},'%')
+            </if>
+            <if test=" params.jiashuEmail != '' and params.jiashuEmail != null and params.jiashuEmail != 'null' ">
+                and jiashu.jiashu_email like CONCAT('%',#{params.jiashuEmail},'%')
+            </if>
+                <!-- 判断护工的id不为空 -->
+            <if test=" params.yonghuIdNotNull != '' and params.yonghuIdNotNull != null and params.yonghuIdNotNull != 'null' ">
+                and a.yonghu_id IS NOT NULL
+            </if>
+            <if test=" params.yonghuUuidNumber != '' and params.yonghuUuidNumber != null and params.yonghuUuidNumber != 'null' ">
+                and yonghu.yonghu_uuid_number like CONCAT('%',#{params.yonghuUuidNumber},'%')
+            </if>
+            <if test=" params.yonghuName != '' and params.yonghuName != null and params.yonghuName != 'null' ">
+                and yonghu.yonghu_name like CONCAT('%',#{params.yonghuName},'%')
+            </if>
+            <if test=" params.yonghuPhone != '' and params.yonghuPhone != null and params.yonghuPhone != 'null' ">
+                and yonghu.yonghu_phone like CONCAT('%',#{params.yonghuPhone},'%')
+            </if>
+            <if test=" params.yonghuIdNumber != '' and params.yonghuIdNumber != null and params.yonghuIdNumber != 'null' ">
+                and yonghu.yonghu_id_number like CONCAT('%',#{params.yonghuIdNumber},'%')
+            </if>
+            <if test="params.yonghuTypes != null  and params.yonghuTypes != ''">
+                and yonghu.yonghu_types = #{params.yonghuTypes}
+            </if>
+
+            <if test=" params.yonghuJaiwei != '' and params.yonghuJaiwei != null and params.yonghuJaiwei != 'null' ">
+                and yonghu.yonghu_jaiwei like CONCAT('%',#{params.yonghuJaiwei},'%')
+            </if>
+            <if test=" params.yonghuEmail != '' and params.yonghuEmail != null and params.yonghuEmail != 'null' ">
+                and yonghu.yonghu_email like CONCAT('%',#{params.yonghuEmail},'%')
+            </if>
+            <if test="params.jinyongTypes != null  and params.jinyongTypes != ''">
+                and yonghu.jinyong_types = #{params.jinyongTypes}
+            </if>
+
+        </where>
+        order by a.${params.sort} ${params.order}
+    </select>
+
+</mapper>

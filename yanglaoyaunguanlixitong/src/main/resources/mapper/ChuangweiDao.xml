@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.ChuangweiDao">
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        a.id as id
+        ,a.fangjian_id as fangjianId
+        ,a.chuangwei_name as chuangweiName
+        ,a.chuangwei_uuid_number as chuangweiUuidNumber
+        ,a.chuangwei_photo as chuangweiPhoto
+        ,a.chuangwei_address as chuangweiAddress
+        ,a.chuangwei_types as chuangweiTypes
+        ,a.chuangwei_content as chuangweiContent
+        ,a.chuangwei_delete as chuangweiDelete
+        ,a.insert_time as insertTime
+        ,a.create_time as createTime
+    </sql>
+    <select id="selectListView" parameterType="map" resultType="com.entity.view.ChuangweiView" >
+        SELECT
+        <include refid="Base_Column_List" />
+        <!-- 级联表的字段 -->
+        ,fangjian.fangjian_name as fangjianName
+        ,fangjian.fangjian_uuid_number as fangjianUuidNumber
+        ,fangjian.fangjian_photo as fangjianPhoto
+        ,fangjian.fangjian_address as fangjianAddress
+        ,fangjian.fangjian_types as fangjianTypes
+        ,fangjian.fangjian_content as fangjianContent
+        ,fangjian.fangjian_delete as fangjianDelete
+
+        FROM chuangwei  a
+        left JOIN fangjian fangjian ON a.fangjian_id = fangjian.id
+
+        <where>
+            <if test="params.ids != null">
+                and a.id in
+                <foreach item="item" index="index" collection="params.ids" open="(" separator="," close=")">
+                #{item}
+                </foreach>
+            </if>
+            <if test="params.fangjianId != null and params.fangjianId != ''">
+                and (
+                    a.fangjian_id = #{params.fangjianId}
+                )
+            </if>
+            <if test=" params.chuangweiName != '' and params.chuangweiName != null and params.chuangweiName != 'null' ">
+                and a.chuangwei_name like CONCAT('%',#{params.chuangweiName},'%')
+            </if>
+            <if test=" params.chuangweiUuidNumber != '' and params.chuangweiUuidNumber != null and params.chuangweiUuidNumber != 'null' ">
+                and a.chuangwei_uuid_number like CONCAT('%',#{params.chuangweiUuidNumber},'%')
+            </if>
+            <if test=" params.chuangweiAddress != '' and params.chuangweiAddress != null and params.chuangweiAddress != 'null' ">
+                and a.chuangwei_address like CONCAT('%',#{params.chuangweiAddress},'%')
+            </if>
+            <if test="params.chuangweiTypes != null and params.chuangweiTypes != ''">
+                and a.chuangwei_types = #{params.chuangweiTypes}
+            </if>
+            <if test=" params.chuangweiContent != '' and params.chuangweiContent != null and params.chuangweiContent != 'null' ">
+                and a.chuangwei_content like CONCAT('%',#{params.chuangweiContent},'%')
+            </if>
+            <if test="params.chuangweiDeleteStart != null and params.chuangweiDeleteStart != ''">
+                <![CDATA[  and a.chuangwei_delete >= #{params.chuangweiDeleteStart}   ]]>
+            </if>
+            <if test="params.chuangweiDeleteEnd != null and params.chuangweiDeleteEnd != ''">
+                <![CDATA[  and a.chuangwei_delete <= #{params.chuangweiDeleteEnd}   ]]>
+            </if>
+             <if test="params.chuangweiDelete != null and params.chuangweiDelete != ''">
+                and a.chuangwei_delete = #{params.chuangweiDelete}
+             </if>
+            <if test=" params.insertTimeStart != '' and params.insertTimeStart != null ">
+                <![CDATA[  and UNIX_TIMESTAMP(a.insert_time) >= UNIX_TIMESTAMP(#{params.insertTimeStart}) ]]>
+            </if>
+            <if test=" params.insertTimeEnd != '' and params.insertTimeEnd != null ">
+                <![CDATA[  and UNIX_TIMESTAMP(a.insert_time) <= UNIX_TIMESTAMP(#{params.insertTimeEnd}) ]]>
+            </if>
+            <if test="params.insertTime != null and params.insertTime != ''">
+                and a.insert_time = #{params.insertTime}
+            </if>
+
+                <!-- 判断房间的id不为空 -->
+            <if test=" params.fangjianIdNotNull != '' and params.fangjianIdNotNull != null and params.fangjianIdNotNull != 'null' ">
+                and a.fangjian_id IS NOT NULL
+            </if>
+            <if test=" params.fangjianName != '' and params.fangjianName != null and params.fangjianName != 'null' ">
+                and fangjian.fangjian_name like CONCAT('%',#{params.fangjianName},'%')
+            </if>
+            <if test=" params.fangjianUuidNumber != '' and params.fangjianUuidNumber != null and params.fangjianUuidNumber != 'null' ">
+                and fangjian.fangjian_uuid_number like CONCAT('%',#{params.fangjianUuidNumber},'%')
+            </if>
+            <if test=" params.fangjianAddress != '' and params.fangjianAddress != null and params.fangjianAddress != 'null' ">
+                and fangjian.fangjian_address like CONCAT('%',#{params.fangjianAddress},'%')
+            </if>
+            <if test="params.fangjianTypes != null  and params.fangjianTypes != ''">
+                and fangjian.fangjian_types = #{params.fangjianTypes}
+            </if>
+
+            <if test=" params.fangjianContent != '' and params.fangjianContent != null and params.fangjianContent != 'null' ">
+                and fangjian.fangjian_content like CONCAT('%',#{params.fangjianContent},'%')
+            </if>
+            <if test="params.fangjianDeleteStart != null  and params.fangjianDeleteStart != '' ">
+                <![CDATA[  and fangjian.fangjian_delete >= #{params.fangjianDeleteStart}   ]]>
+            </if>
+            <if test="params.fangjianDeleteEnd != null  and params.fangjianDeleteEnd != '' ">
+                <![CDATA[  and fangjian.fangjian_delete <= #{params.fangjianDeleteEnd}   ]]>
+            </if>
+            <if test="params.fangjianDelete != null  and params.fangjianDelete != '' ">
+                and fangjian.fangjian_delete = #{params.fangjianDelete}
+            </if>
+            <if test=" params.insertTimeStart != '' and params.insertTimeStart != null ">
+                <![CDATA[  and UNIX_TIMESTAMP(fangjian.insert_time) >= UNIX_TIMESTAMP(#{params.insertTimeStart}) ]]>
+            </if>
+            <if test=" params.insertTimeEnd != '' and params.insertTimeEnd != null ">
+                <![CDATA[  and UNIX_TIMESTAMP(fangjian.insert_time) <= UNIX_TIMESTAMP(#{params.insertTimeEnd}) ]]>
+            </if>
+            <if test="params.insertTime != null and params.insertTime != ''">
+                and a.insert_time = #{params.insertTime}
+            </if>
+        </where>
+        order by a.${params.sort} ${params.order}
+    </select>
+
+</mapper>
